@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 function App() {
-  return <>Hello World</>;
+  const [apiData, setApiData] = useState({});
+
+  const fetchData = () => {
+    fetch("http://localhost:8080/data/getData")
+      .then(resData => {
+        setApiData(resData);
+      })
+      .catch(err => console.log(err))
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return <>{apiData}</>;
 }
 
 export default App;

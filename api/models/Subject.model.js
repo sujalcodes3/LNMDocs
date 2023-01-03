@@ -7,9 +7,9 @@ const SubjectSchema = new Schema({
     type: String,
     required: true,
   },
-  semesterID: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Semester",
+  semester: {
+    type: String,
+    required: true,
   },
   notes: [
     {
