@@ -5,17 +5,20 @@ function App() {
 
   const fetchData = () => {
     fetch("http://localhost:8080/data/getData")
-      .then(resData => {
-        setApiData(resData);
+      .then((resData) => {
+        return resData.json();
       })
-      .catch(err => console.log(err))
-  }
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  return <>{apiData}</>;
+  return <>Hello World</>;
 }
 
 export default App;
