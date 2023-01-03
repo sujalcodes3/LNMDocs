@@ -8,7 +8,7 @@ app.use("/home", homeRoutes);
 
 mongoose
   .connect(
-    "mongodb+srv://ScrewedUP:Harshojhalnm@cluster0.dujluvf.mongodb.net/?retryWrites=true&w=majority",
+    "mongodb+srv://ScrewedUP_Mr:Harshojhalnmiit@cluster0.dujluvf.mongodb.net/lnmdocs?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
