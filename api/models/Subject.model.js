@@ -11,6 +11,24 @@ const SubjectSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Semester",
   },
+  notes: [
+    {
+      name: { type: String, required: true },
+      link: { type: String, required: true },
+    },
+  ],
+  mtpapers: [
+    {
+      year: { type: String, required: true },
+      link: { type: String, required: true },
+    },
+  ],
+  etpapers: [
+    {
+      year: { type: String, required: true },
+      link: { type: String, required: true },
+    },
+  ],
 });
 
 export default mongoose.model("Subject", SubjectSchema);
