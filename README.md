@@ -4,5 +4,5 @@ This is a website which is currently under-development and is targeted to provid
 
 Developers: 
 
-Harsh Ojha 
+Harsh Ojha  
 Sujal Jain
