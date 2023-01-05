@@ -1,9 +1,9 @@
-import Select from "react-select";
+import Select from "@material-tailwind/react";
 
 export default function SelectBox(props) {
   return (
     <div className='w-48'>
-      <Select options={props.options} />
+      <Select label={`"Select "  ${props.name}`}>{props.options}</Select>
     </div>
   );
 }

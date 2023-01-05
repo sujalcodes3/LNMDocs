@@ -4,7 +4,11 @@ import { Button } from "@material-tailwind/react";
 export default function FormSelect(props) {
   return (
     <div className='h-screen flex flex-col justify-center items-center gap-y-10'>
-      <div className='h-max w-screen flex justify-evenly items-center'></div>
+      <div className='h-max w-screen flex justify-evenly items-center'>
+        <SelectBox name='Subject' />
+        <SelectBox name='Type' />
+        <SelectBox name='Year' />
+      </div>
       <Button variant='outlined' className='w-48 m-auto my-4 '>
         Search
       </Button>
