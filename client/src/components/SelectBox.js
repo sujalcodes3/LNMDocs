@@ -1,12 +1,8 @@
-import Select from "react-select";
-
+import { Select } from "@material-tailwind/react";
 export default function SelectBox(props) {
-  const selectedHandler = (selectedOption) => {
-    console.log(selectedOption.value);
-  };
   return (
     <div className='w-48'>
-      <Select onChange={selectedHandler} options={props.options} />
+      <Select label={`"Select "  ${props.name}`}>{props.options}</Select>
     </div>
   );
 }
