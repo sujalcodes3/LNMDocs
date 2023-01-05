@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import FormSelect from "./components/Form";
+import Navbar from "./components/Navbar"
 
 function App() {
-  const [apiData, setApiData] = useState({});
-
-  const fetchData = () => {
-    fetch("http://localhost:8080/data/getData")
-      .then((resData) => {
-        return resData.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return <>Hello World</>;
+  return (
+    <div>
+      <Navbar />
+      <FormSelect />
+    </div>
+  );
 }
 
 export default App;
