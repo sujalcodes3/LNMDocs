@@ -96,7 +96,7 @@ export default function FormSelect(props) {
       </div>
       <div className='flex gap-8'>
         <Button
-          variant='filled'
+          variant='gradient'
           className='w-48 m-auto my-4'
           {...submitEnabler}
         >
