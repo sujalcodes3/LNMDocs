@@ -1,18 +1,22 @@
-import React from "react";
+import React from 'react';
+import { Button } from '@material-tailwind/react';
 
 function Navbar() {
+
   return (
-    <div>
-      <nav className='flex justify-between h-20'>
-        <div className='mx-16 my-7 text-orange-700 font-bold text-4xl drop-shadow-md'>
-          LNMDocs
-        </div>
-        <div className='mx-16 my-9 text-lg cursor-pointer font-semibold text-orange-900'>
-          Admin Console
-        </div>
-      </nav>
-    </div>
+    <nav className="flex justify-around h-max my-8">
+      <div className="flex items-baseline">
+        <i className="fa-2x fa-regular fa-file  text-white" />
+        <div className="mx-4 text-white font-extrabold brightness-200 text-2xl drop-shadow-xl">LNMDocs</div>
+      </div>
+      <Button variant='gradient' >
+        Admin Console
+      </Button>
+      {/* <div className="mx-4 my-2 cursor-pointer">Admin Console</div> */}
+    </nav >
   );
 }
 
 export default Navbar;
+// text - slate - 800
+// brightness-150
