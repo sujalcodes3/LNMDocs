@@ -64,7 +64,7 @@ export default function FormSelect(props) {
   };
 
   return (
-    <div className='h-screen flex flex-col justify-center items-center gap-y-10'>
+    <div className='h-max flex flex-col justify-center items-center gap-y-10'>
       <div className='h-max w-max flex justify-evenly items-center gap-10'>
         <Select
           value={value.subject}
