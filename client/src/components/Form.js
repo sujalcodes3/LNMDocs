@@ -64,15 +64,15 @@ export default function FormSelect(props) {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center gap-y-10'>
-      <div className='h-max w-max flex justify-evenly items-center gap-10'>
+    <div className='flex w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg   bg-slate-100 backdrop-blur-sm backdrop-brightness-150'>
+      <div className='h-max w-max flex flex-col justify-evenly items-center gap-10'>
         <Select
           value={value.subject}
           color='orange'
           label='Select Subject'
           animate={animation}
           onChange={subjectChangeHandler}
-          className="brightness-200"
+          className="brightness-200 w-72 shadow-sm shadow-indigo-900"
         >
           {subjects}
         </Select>
@@ -82,7 +82,7 @@ export default function FormSelect(props) {
           color='yellow'
           label='Select Type'
           onChange={typeChangeHandler}
-          className="brightness-200"
+          className="brightness-200 w-72 shadow-sm shadow-indigo-900"
         >
           {types}
         </Select>
@@ -92,7 +92,7 @@ export default function FormSelect(props) {
           color='green'
           label='Select Year'
           onChange={yearChangeHandler}
-          className="brightness-200"
+          className="brightness-200 w-72 shadow-sm shadow-indigo-900"
         >
           {years}
         </Select>
@@ -100,14 +100,14 @@ export default function FormSelect(props) {
       <div className='flex gap-8'>
         <Button
           variant='gradient'
-          className='w-48 m-auto my-4'
+          className='w-40 m-auto '
           {...submitEnabler}
         >
           Search
         </Button>
         <Button
           variant='outlined'
-          className='w-48 m-auto my-4'
+          className='w-24 m-auto'
           onClick={resetHandler}
         >
           Reset
