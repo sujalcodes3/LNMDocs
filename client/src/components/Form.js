@@ -43,15 +43,15 @@ export default function FormSelect(props) {
   };
 
   const subjects = ["COA", "M3"].map((ele) => {
-    return <Option value={ele}>{ele}</Option>;
+    return <Option className="font-semibold" value={ele}>{ele}</Option>;
   });
 
   const types = ["Notes", "Previous-Year Papers"].map((ele) => {
-    return <Option value={ele}>{ele}</Option>;
+    return <Option className="font-semibold" value={ele}>{ele}</Option>;
   });
 
   const years = ["2018", "2019", "2020", "2021"].map((ele) => {
-    return <Option value={ele}>{ele}</Option>;
+    return <Option className="font-semibold" value={ele}>{ele}</Option>;
   });
   const animation = {
     mount: { y: 0 },
@@ -64,7 +64,7 @@ export default function FormSelect(props) {
   };
 
   return (
-    <div className='h-max flex flex-col justify-center items-center gap-y-10'>
+    <div className='flex flex-col justify-center items-center gap-y-10'>
       <div className='h-max w-max flex justify-evenly items-center gap-10'>
         <Select
           value={value.subject}
@@ -72,6 +72,7 @@ export default function FormSelect(props) {
           label='Select Subject'
           animate={animation}
           onChange={subjectChangeHandler}
+          className="brightness-200"
         >
           {subjects}
         </Select>
@@ -81,6 +82,7 @@ export default function FormSelect(props) {
           color='yellow'
           label='Select Type'
           onChange={typeChangeHandler}
+          className="brightness-200"
         >
           {types}
         </Select>
@@ -90,6 +92,7 @@ export default function FormSelect(props) {
           color='green'
           label='Select Year'
           onChange={yearChangeHandler}
+          className="brightness-200"
         >
           {years}
         </Select>

@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <div>
+    <div className="h-[calc(100vh-40px)]">
       <Navbar />
       <FormSelect />
     </div>
