@@ -4,7 +4,7 @@ module.exports = withMT({
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     screens: {
-      'md': { 'max': '767px' }
+      'md': { 'max': '860px' }
     },
     extend: {
       dropShadow: {
