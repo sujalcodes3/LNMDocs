@@ -19,13 +19,13 @@ const SubjectSchema = new Schema({
   ],
   mtpapers: [
     {
-      year: { type: String, required: true },
+      year: { type: String, required: true, unique: true },
       link: { type: String, required: true },
     },
   ],
   etpapers: [
     {
-      year: { type: String, required: true },
+      year: { type: String, required: true, unique: true },
       link: { type: String, required: true },
     },
   ],

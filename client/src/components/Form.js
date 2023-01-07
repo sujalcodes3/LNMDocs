@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Select, Option } from "@material-tailwind/react";
 
 export default function FormSelect(props) {
+  const [subjects, setSubjects] = useState([]);
+
   const [value, setValue] = useState({
     subject: "",
     type: "",
@@ -42,16 +44,46 @@ export default function FormSelect(props) {
     });
   };
 
-  const subjects = ["COA", "M3"].map((ele) => {
-    return <Option className="font-semibold" value={ele}>{ele}</Option>;
-  });
+  useEffect(() => {
+    fetch("http://localhost:8080/data/subjects")
+      .then((response) => response.json())
+      .then((data) => {
+        setSubjects(data);
+      });
+  }, []);
 
-  const types = ["Notes", "Previous-Year Papers"].map((ele) => {
-    return <Option className="font-semibold" value={ele}>{ele}</Option>;
+  const subjectOptions = subjects.map((ele) => {
+    return (
+      <Option className='font-semibold' value={ele.name}>
+        {ele.name}
+      </Option>
+    );
+  });
+  const types = [
+    {
+      key: 1,
+      name: "Notes",
+    },
+    {
+      key: 2,
+      name: "Previous-Year Papers",
+    },
+  ];
+
+  const typesOptions = types.map((ele) => {
+    return (
+      <Option className='font-semibold' value={ele.name}>
+        {ele.name}
+      </Option>
+    );
   });
 
   const years = ["2018", "2019", "2020", "2021"].map((ele) => {
-    return <Option className="font-semibold" value={ele}>{ele}</Option>;
+    return (
+      <Option className='font-semibold' value={ele}>
+        {ele}
+      </Option>
+    );
   });
   const animation = {
     mount: { y: 0 },
@@ -72,9 +104,9 @@ export default function FormSelect(props) {
           label='Select Subject'
           animate={animation}
           onChange={subjectChangeHandler}
-          className="brightness-200 w-72 shadow-sm shadow-indigo-900"
+          className='brightness-200 w-72 shadow-sm shadow-indigo-900'
         >
-          {subjects}
+          {subjectOptions}
         </Select>
         <Select
           value={value.type}
@@ -82,9 +114,9 @@ export default function FormSelect(props) {
           color='yellow'
           label='Select Type'
           onChange={typeChangeHandler}
-          className="brightness-200 w-72 shadow-sm shadow-indigo-900"
+          className='brightness-200 w-72 shadow-sm shadow-indigo-900'
         >
-          {types}
+          {typesOptions}
         </Select>
         <Select
           value={value.year}
@@ -92,17 +124,13 @@ export default function FormSelect(props) {
           color='green'
           label='Select Year'
           onChange={yearChangeHandler}
-          className="brightness-200 w-72 shadow-sm shadow-indigo-900"
+          className='brightness-200 w-72 shadow-sm shadow-indigo-900'
         >
           {years}
         </Select>
       </div>
       <div className='flex gap-8'>
-        <Button
-          variant='gradient'
-          className='w-40 m-auto '
-          {...submitEnabler}
-        >
+        <Button variant='gradient' className='w-40 m-auto ' {...submitEnabler}>
           Search
         </Button>
         <Button
