@@ -89,14 +89,23 @@ export default function FormSelect(props) {
     mount: { y: 0 },
     unmount: { y: 25 },
   };
-
-  const submitEnable = !(value.subject && value.type && value.year);
+  const yearEnable = value.type === "Notes" ? false : true;
+  const submitEnable = !(
+    value.subject &&
+    value.type &&
+    !yearEnable &&
+    value.year
+  );
   const submitEnabler = {
     disabled: submitEnable,
   };
+  //
+  // const yearEnabler = {
+  //   disabled: yearEnable,
+  // };
 
   return (
-    <div className='flex w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg   bg-slate-100 backdrop-blur-sm backdrop-brightness-150'>
+    <div className='flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg   bg-slate-100 backdrop-blur-sm backdrop-brightness-150'>
       <div className='h-max w-max flex flex-col justify-evenly items-center gap-10'>
         <Select
           value={value.subject}
@@ -118,16 +127,18 @@ export default function FormSelect(props) {
         >
           {typesOptions}
         </Select>
-        <Select
-          value={value.year}
-          animate={animation}
-          color='green'
-          label='Select Year'
-          onChange={yearChangeHandler}
-          className='brightness-200 w-72 shadow-sm shadow-indigo-900'
-        >
-          {years}
-        </Select>
+        {yearEnable && (
+          <Select
+            value={value.year}
+            animate={animation}
+            color='green'
+            label='Select Year'
+            onChange={yearChangeHandler}
+            className='brightness-200 w-72 shadow-sm shadow-indigo-900'
+          >
+            {years}
+          </Select>
+        )}
       </div>
       <div className='flex gap-8'>
         <Button variant='gradient' className='w-40 m-auto ' {...submitEnabler}>
