@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import FormSelect from "./components/Form";
 import Navbar from "./components/Navbar";
 import image from './assets/left_png.png'
