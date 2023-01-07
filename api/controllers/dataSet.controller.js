@@ -53,3 +53,33 @@ export const getSubjects = (req, res, next) => {
       console.log(err);
     });
 };
+
+export const addLink = (req, res, next) => {
+  const subject = req.params.subject;
+  const type = req.params.type;
+
+  const enteredLink = req.body.link ? req.body.link : null;
+  const enteredName = req.body.name ? req.body.name : null;
+  const enteredYear = req.body.year ? req.body.year : null;
+
+  const newNote = { name: enteredName, link: enteredLink };
+  const newPaper = { year: enteredYear, link: enteredLink };
+
+  return Subject.updateOne(
+    { name: subject },
+    {
+      $push:
+        type === "notes"
+          ? { notes: newNote }
+          : type === "mtpapers"
+          ? { mtpapers: newPaper }
+          : { etpapers: newPaper },
+    }
+  )
+    .then((result) => {
+      res.json({ message: "Updated Successfully" });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
