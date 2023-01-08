@@ -45,7 +45,7 @@ export const getSubjects = (req, res, next) => {
     .then((resData) => {
       res.json(
         resData.map((data) => {
-          return { key: data._id, name: data.name };
+          return { name: data.name };
         })
       );
     })
