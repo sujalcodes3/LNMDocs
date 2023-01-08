@@ -43,11 +43,7 @@ export const getData = (req, res, next) => {
 export const getSubjects = (req, res, next) => {
   Subject.find()
     .then((resData) => {
-      res.json(
-        resData.map((data) => {
-          return { key: data._id, name: data.name };
-        })
-      );
+      res.json(resData.map((data) => data.name));
     })
     .catch((err) => {
       console.log(err);
@@ -82,4 +78,20 @@ export const addLink = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+export const getLink = (req, res, next) => {
+  const enteredSubject = req.params.subject;
+  const enteredType = req.params.type;
+  const enteredYear = req.params.year;
+
+  console.log(enteredSubject, " ", enteredType, " ", enteredYear);
+  res.json({
+    message: "The Sent Response",
+    enteredBodyByTheUser: {
+      subject: enteredSubject,
+      type: enteredType,
+      year: enteredYear,
+    },
+  });
 };
