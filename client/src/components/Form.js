@@ -1,4 +1,4 @@
-import { Button, Select, Option } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 
 const Form = (props) => {
@@ -17,7 +17,7 @@ const Form = (props) => {
     fetch("http://localhost:8080/data/subjects")
       .then((response) => response.json())
       .then((subjects) => {
-        setFetchedSubjects(subjects.map((subject) => subject.name));
+        setFetchedSubjects(subjects);
       })
       .catch((err) => {
         console.log(err);
@@ -36,31 +36,54 @@ const Form = (props) => {
   //now let us map the three arrays, that are, fetchedsubjects(state), types, years to Option elements of the tailwind css material library
 
   const subjectOptions = fetchedSubjects.map((subject) => (
-    <Option key={Math.random()} className='font-semibold' value={subject}>
+    <option key={Math.random()} className='font-semibold' value={subject}>
       {subject}
-    </Option>
+    </option>
   ));
+
   const typesOptions = types.map((type) => (
-    <Option key={Math.random()} className='font-semibold' value={type}>
+    <option
+      key={Math.random()}
+      className='font-semibold'
+      value={type === "Previous-Year Papers" ? "papers" : type}
+    >
       {type}
-    </Option>
+    </option>
   ));
+
   const yearsOptions = years.map((year) => (
-    <Option key={Math.random()} className='font-semibold' value={year}>
+    <option key={Math.random()} className='font-semibold' value={year}>
       {year}
-    </Option>
+    </option>
   ));
   //now we can render Select component
 
   // the subject change handler
-  const subjectChangeHandler = (value) => {
+  const subjectChangeHandler = (event) => {
     setEnteredValue((prevState) => {
       return {
         ...prevState,
-        subject: value,
+        subject: event.target.value,
       };
     });
-    console.log(enteredValue);
+  };
+  // the type change handler
+  const typeChangeHandler = (event) => {
+    setEnteredValue((prevState) => {
+      return {
+        ...prevState,
+        type: event.target.value,
+      };
+    });
+  };
+  // the year change handler
+  const yearChangeHandler = (event) => {
+    setEnteredValue((prevState) => {
+      return {
+        ...prevState,
+        year: event.target.value,
+      };
+    });
   };
 
   //the reset handler
@@ -72,16 +95,84 @@ const Form = (props) => {
     });
   };
 
+  //the submit handler
+  const submitHandler = () => {
+    fetch(
+      "http://localhost:8080/data/get-link/" +
+        enteredValue.subject +
+        "/" +
+        enteredValue.type +
+        "/" +
+        enteredValue.year
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  console.log(enteredValue);
   //let us also define a uniform className for each select component
   const selectClass = "brightness-200 w-72 shadow-sm shadow-indigo-900";
 
   return (
     <div className='flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg   bg-slate-100 backdrop-blur-sm backdrop-brightness-150'>
       <div className='h-max w-max flex flex-col justify-evenly items-center gap-10'>
-        <Select
+        <select
+          value={enteredValue.subject}
+          name='Select Subject'
+          className={selectClass}
+          onChange={subjectChangeHandler}
+        >
+          <option
+            key={Math.random()}
+            className='font-semibold'
+            value='Select Subject'
+            selected
+          >
+            Select Subject
+          </option>
+          {subjectOptions}
+        </select>
+        <select
           value={enteredValue.type}
           label='Select Type'
           className={selectClass}
+          onChange={typeChangeHandler}
+        >
+          <option
+            key={Math.random()}
+            className='font-semibold'
+            value='Select Type'
+            selected
+          >
+            Select Type
+          </option>
+          {typesOptions}
+        </select>
+        <select
+          value={enteredValue.year}
+          label='Select Year'
+          className={selectClass}
+          onChange={yearChangeHandler}
+        >
+          <option
+            key={Math.random()}
+            className='font-semibold'
+            value='Select Year'
+            selected
+          >
+            Select Year
+          </option>
+          {yearsOptions}
+        </select>
+        {/* <Select
+          value={enteredValue.type}
+          label='Select Type'
+          className={selectClass}
+          onChange={typeChangeHandler}
         >
           {typesOptions}
         </Select>
@@ -97,12 +188,17 @@ const Form = (props) => {
           value={enteredValue.year}
           label='Select Year'
           className={selectClass}
+          onChange={yearChangeHandler}
         >
           {yearsOptions}
-        </Select>
+        </Select> */}
       </div>
       <div className='flex gap-8'>
-        <Button className='w-40 m-auto ' variant='gradient'>
+        <Button
+          className='w-40 m-auto '
+          variant='gradient'
+          onClick={submitHandler}
+        >
           Search
         </Button>
         <Button
