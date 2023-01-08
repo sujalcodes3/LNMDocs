@@ -2,39 +2,42 @@ import { useEffect, useState } from "react";
 import { Button, Select, Option } from "@material-tailwind/react";
 
 export default function FormSelect(props) {
-  const [subjects, setSubjects] = useState([]);
-
   const [value, setValue] = useState({
     subject: "",
     type: "",
     year: "",
   });
-  const subjectChangeHandler = (value) => {
+  const [subjects, setSubjects] = useState([]);
+
+  const subjectChangeHandler = (evalue) => {
     setValue((prevState) => {
       return {
         ...prevState,
-        subject: value,
+        subject: evalue,
       };
     });
     console.log(value);
   };
-  const typeChangeHandler = (value) => {
+  const typeChangeHandler = (evalue) => {
     setValue((prevState) => {
       return {
         ...prevState,
-        type: value,
+        type: evalue,
       };
     });
     console.log(value);
   };
-  const yearChangeHandler = (value) => {
+  const yearChangeHandler = (evalue) => {
     setValue((prevState) => {
       return {
         ...prevState,
-        year: value,
+        year: evalue,
+
       };
     });
-    console.log(value);
+    setTimeout(() => {
+      console.log(value);
+    }, 5000);
   };
   const resetHandler = (event) => {
     setValue({
@@ -43,15 +46,21 @@ export default function FormSelect(props) {
       year: "",
     });
   };
-
-  useEffect(() => {
+  const fetchData = () => {
     fetch("http://localhost:8080/data/subjects")
-      .then((response) => response.json())
+      .then((response) => {
+        return response.json()
+      })
       .then((data) => {
         setSubjects(data);
-      });
+      })
+    console.log("try");
+  }
+  useEffect(() => {
+    fetchData();
+    console.log("effecttest")
   }, []);
-
+  console.log(value, "+test");
   const subjectOptions = subjects.map((ele) => {
     return (
       <Option className='font-semibold' value={ele.name}>
