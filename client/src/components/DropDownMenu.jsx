@@ -33,13 +33,18 @@ const DropDownMenu = React.forwardRef((props, ref) => {
     document.addEventListener("mousedown", handleClickOutside);
   }, [clickOutside]);
 
+  const iconProps={
+    size:18,
+    className:"text-gray"
+  }
+  
   const iconName = props.label.toLowerCase();
   const icon = iconName.includes("subject") ? (
-    <ImBooks size={18} className="text-gray-200" />
+    <ImBooks {...iconProps}/>
   ) : iconName.includes("type") ? (
-    <CgOptions size={18} className="text-gray-200" />
+    <CgOptions {...iconProps}/>
   ) : (
-    <BsCalendarEventFill size={18} className="text-gray-200" />
+    <BsCalendarEventFill {...iconProps}/>
   );
 
   return (
