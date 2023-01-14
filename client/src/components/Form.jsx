@@ -2,9 +2,10 @@ import { Button } from "@material-tailwind/react";
 import { useRef } from "react";
 import { useState, useEffect } from "react";
 import DropdownMenu from "./DropDownMenu";
-
+import Card from "./Card";
 const Form = (props) => {
   const [fetchedSubjects, setFetchedSubjects] = useState([]);
+  const [fetchedLinks, setFetchedLinks] = useState(null);
   const [enteredValue, setEnteredValue] = useState({
     subject: "",
     type: "",
@@ -14,7 +15,7 @@ const Form = (props) => {
   const resetSubjectField = useRef();
   const resetTypeField = useRef();
   const resetYearField = useRef();
-
+  let cardData;
   const fetchSubjectData = () => {
     fetch("http://localhost:8080/data/subjects")
       .then((response) => response.json())
@@ -74,13 +75,21 @@ const Form = (props) => {
       "http://localhost:8080/data/get-link/" +
         enteredValue.subject +
         "/" +
-        enteredValue.type +
+        (enteredValue.type === "Previous-Year Papers" ? "papers" : "Notes") +
         "/" +
         enteredValue.year
     )
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
+        setFetchedLinks(result);
+        cardData = fetchedLinks.map((ele) => {
+          return {
+            notes: ele.notes,
+            mtpapers: ele.mtpapers,
+            etpapers: ele.etpapers,
+          };
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -124,6 +133,21 @@ const Form = (props) => {
           Reset
         </Button>
       </div>
+
+      {fetchedLinks &&
+        cardData.map((ele) => {
+          return <Card name={fetchedLinks.name ? fetchedLinks.name : null} />;
+        })}
+      {fetchedLinks &&
+        enteredValue.type === "Notes" &&
+        cardData.map((ele) => {
+          return (
+            <Card
+              name={fetchedLinks.name ? fetchedLinks.name : null}
+              notesName={ele.name}
+            />
+          );
+        })}
     </div>
   );
 };

@@ -68,8 +68,8 @@ export const addLink = (req, res, next) => {
         type === "notes"
           ? { notes: newNote }
           : type === "mtpapers"
-          ? { mtpapers: newPaper }
-          : { etpapers: newPaper },
+            ? { mtpapers: newPaper }
+            : { etpapers: newPaper },
     }
   )
     .then((result) => {
@@ -83,15 +83,29 @@ export const addLink = (req, res, next) => {
 export const getLink = (req, res, next) => {
   const enteredSubject = req.params.subject;
   const enteredType = req.params.type;
-  const enteredYear = req.params.year;
+  const enteredYear = req.params.year ? req.params.year : null;
 
-  console.log(enteredSubject, " ", enteredType, " ", enteredYear);
-  res.json({
-    message: "The Sent Response",
-    enteredBodyByTheUser: {
-      subject: enteredSubject,
-      type: enteredType,
-      year: enteredYear,
-    },
-  });
+  Subject.findOne({
+    name: enteredSubject
+  })
+    .then(subjectData => {
+      console.log(subjectData)
+      if (enteredType === "Notes") {
+        res.json({
+          name: subjectData.name,
+          notesData: subjectData.notes,
+        })
+      }
+      else if (enteredType === "papers") {
+        res.json({
+          name: subjectData.name,
+          mtpaperData: subjectData.mtpapers.filter(mtpaper => mtpaper.year === enteredYear),
+          etpaperData: subjectData.etpapers.filter(etpaper => etpaper.year === enteredYear),
+        })
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
 };
