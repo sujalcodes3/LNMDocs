@@ -80,7 +80,7 @@ export const addLink = (req, res, next) => {
     });
 };
 
-export const getLink = (req, res, next) => {
+export const getLinks = (req, res, next) => {
   const enteredSubject = req.params.subject;
   const enteredType = req.params.type;
   const enteredYear = req.params.year ? req.params.year : null;
