@@ -1,4 +1,4 @@
-import Subject from "../models/subject.model.js";
+import Subject from "../models/Subject.model.js";
 
 export const addData = (req, res, next) => {
   const name = req.body.name;
