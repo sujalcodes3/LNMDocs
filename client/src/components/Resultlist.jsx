@@ -20,5 +20,5 @@ export default function Resultlist(props) {
     ));
   }
 
-  return <div>{content}</div>;
+  return <div className='flex w-max'>{content}</div>;
 }
