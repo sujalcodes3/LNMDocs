@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 import LoadingContext from "../store/loading-context";
 import DropdownMenu from "./DropDownMenu";
 import Resultlist from "./Resultlist";
+import FetchedlinksContext from "../store/fetchedlinks-context";
 
 const Form = (props) => {
+  const fetchctx = useContext(FetchedlinksContext);
   const ctx = useContext(LoadingContext);
   const [fetchedSubjects, setFetchedSubjects] = useState([]);
-  const [fetchedLinks, setFetchedLinks] = useState(null);
+  //const [fetchedLinks, setFetchedLinks] = useState(null);
   const [enteredValue, setEnteredValue] = useState({
     subject: "",
     type: "",
@@ -90,82 +92,82 @@ const Form = (props) => {
       }
       const links = await response.json();
       console.log(links);
-      setFetchedLinks(links);
+      fetchctx.onFetched(links);
       ctx.onLoaded();
       // props.subjectDataEntry(links);
     } catch (err) {
       console.log(err);
     }
   };
-  const notesResult = fetchedLinks
-    ? fetchedLinks.hasOwnProperty("notes") && (
+  const notesResult = fetchctx.fetchedLinks
+    ? fetchctx.fetchedLinks.hasOwnProperty("notes") && (
         <Resultlist
-          data={fetchedLinks.notes}
-          type='notes'
-          subName={fetchedLinks.name}
+          data={fetchctx.fetchedLinks.notes}
+          type="notes"
+          subName={fetchctx.fetchedLinks.name}
         />
       )
     : null;
-  const paperResult = fetchedLinks
-    ? !fetchedLinks.hasOwnProperty("notes") &&
-      fetchedLinks.hasOwnProperty("etpaperData") && (
+  const paperResult = fetchctx.fetchedLinks
+    ? !fetchctx.fetchedLinks.hasOwnProperty("notes") &&
+      fetchctx.fetchedLinks.hasOwnProperty("etpaperData") && (
         <>
           <Resultlist
-            data={fetchedLinks.etpaperData}
-            title='End Term Paper'
-            type='etpapers'
-            subName={fetchedLinks.name}
+            data={fetchctx.fetchedLinks.etpaperData}
+            title="End Term Paper"
+            type="etpapers"
+            subName={fetchctx.fetchedLinks.name}
           />
           <Resultlist
-            data={fetchedLinks.mtpaperData}
-            title='Mid Term Paper'
-            type='mtpapers'
-            subName={fetchedLinks.name}
+            data={fetchctx.fetchedLinks.mtpaperData}
+            title="Mid Term Paper"
+            type="mtpapers"
+            subName={fetchctx.fetchedLinks.name}
           />
         </>
       )
     : null;
   return (
-    <div className='flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg   bg-slate-100 backdrop-blur-sm backdrop-brightness-150'>
-      <div className='h-max w-max flex flex-col justify-evenly items-center gap-10'>
+    <div className="flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg   bg-slate-100 backdrop-blur-sm backdrop-brightness-150">
+      <div className="h-max w-max flex flex-col justify-evenly items-center gap-10">
         <DropdownMenu
           ref={resetSubjectField}
-          label='Select Subject'
+          label="Select Subject"
           options={fetchedSubjects}
           handleChange={subjectChangeHandler}
         />
         <DropdownMenu
           ref={resetTypeField}
-          label='Select Type'
+          label="Select Type"
           options={typesOptions}
           handleChange={typeChangeHandler}
         />
         <DropdownMenu
           ref={resetYearField}
-          label='Select Year'
+          label="Select Year"
           options={yearsOptions}
           handleChange={yearChangeHandler}
         />
       </div>
-      <div className='flex gap-8'>
+      <div className="flex gap-8">
         <Button
-          className='w-40 m-auto '
-          variant='gradient'
+          className="w-40 m-auto "
+          variant="gradient"
           onClick={submitHandler}
         >
           Search
         </Button>
         <Button
-          className='w-24 m-auto'
-          variant='outlined'
+          className="w-24 m-auto"
+          variant="outlined"
           onClick={resetHandler}
         >
           Reset
         </Button>
       </div>
 
-      {!ctx.isLoading && fetchedLinks && notesResult}
-      {!ctx.isLoading && fetchedLinks && paperResult}
+      {!ctx.isLoading && fetchctx.fetchedLinks && notesResult}
+      {!ctx.isLoading && fetchctx.fetchedLinks && paperResult}
     </div>
   );
 };
