@@ -8,6 +8,7 @@ import { useContext } from "react";
 import LoadingContext from "./store/loading-context";
 import Resultlist from "./components/Resultlist";
 import { motion } from "framer-motion";
+import { MutatingDots } from "react-loader-spinner";
 
 function App() {
   const fetchctx = useContext(FetchedlinksContext);
@@ -32,11 +33,7 @@ function App() {
   const paperResults = fetchctx.fetchedLinks
     ? !fetchctx.fetchedLinks.hasOwnProperty("notes") &&
       fetchctx.fetchedLinks.hasOwnProperty("etpaperData") && (
-        <motion.div
-          initial={{ opacity: 0, translateX: 50 }}
-          animate={{ opacity: 1, translateX: 0 }}
-          transition={{ duration: 2, type: "spring", delay: 1 }}
-        >
+        <div>
           <Resultlist
             data={fetchctx.fetchedLinks.etpaperData}
             title='End Term Paper'
@@ -49,7 +46,7 @@ function App() {
             type='mtpapers'
             subName={fetchctx.fetchedLinks.name}
           />
-        </motion.div>
+        </div>
       )
     : null;
 
@@ -71,6 +68,19 @@ function App() {
           <Form />
         </div>
         <div className='flex justify-center items-center'>
+          {ctx.loader && (
+            <MutatingDots
+              height='100'
+              width='100'
+              color='#fff'
+              secondaryColor='#be6cf4'
+              radius='12.5'
+              ariaLabel='mutating-dots-loading'
+              wrapperStyle={{}}
+              wrapperClass=''
+              visible={true}
+            />
+          )}
           {!ctx.isLoading && fetchctx.isFetched && notesResults}
           {!ctx.isLoading && fetchctx.isFetched && paperResults}
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@material-tailwind/react";
+// import { Button } from "@material-tailwind/react";
 import logo from "../assets/navbar_logo.png";
 
 function Navbar() {
@@ -11,7 +11,7 @@ function Navbar() {
           LNMDocs
         </div>
       </div>
-      <Button variant='gradient'>Admin Console</Button>
+      {/* <Button variant='gradient'>Admin Console</Button> */}
     </nav>
   );
 }

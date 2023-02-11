@@ -1,10 +1,10 @@
-import { Button } from "@material-tailwind/react";
 import { useContext } from "react";
 import { useRef } from "react";
 import { useState, useEffect } from "react";
 import LoadingContext from "../store/loading-context";
 import DropdownMenu from "./DropDownMenu";
 import FetchedlinksContext from "../store/fetchedlinks-context";
+import Button from "./UI/Button";
 
 const Form = (props) => {
   const fetchctx = useContext(FetchedlinksContext);
@@ -78,6 +78,7 @@ const Form = (props) => {
   const submitHandler = async () => {
     try {
       ctx.onLoading();
+      ctx.loaderOn();
       const response = await fetch(
         "http://localhost:8080/data/get-link/" +
           enteredValue.subject +
@@ -93,6 +94,7 @@ const Form = (props) => {
       console.log(links);
       fetchctx.onFetched(links);
       ctx.onLoaded();
+      ctx.loaderOff();
       // props.subjectDataEntry(links);
     } catch (err) {
       console.log(err);
@@ -100,7 +102,7 @@ const Form = (props) => {
   };
 
   return (
-    <div className='flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg   bg-slate-100 backdrop-blur-sm backdrop-brightness-150'>
+    <div className='flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent'>
       <div className='h-max w-max flex flex-col justify-evenly items-center gap-10'>
         <DropdownMenu
           ref={resetSubjectField}
@@ -121,8 +123,9 @@ const Form = (props) => {
           handleChange={yearChangeHandler}
         />
       </div>
-      <div className='flex gap-8'>
+      <div className='flex w-80 justify-around'>
         <Button
+          type='submit'
           className='w-40 m-auto '
           variant='gradient'
           onClick={submitHandler}
@@ -130,6 +133,7 @@ const Form = (props) => {
           Search
         </Button>
         <Button
+          type='reset'
           className='w-24 m-auto'
           variant='outlined'
           onClick={resetHandler}

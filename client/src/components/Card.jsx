@@ -1,10 +1,16 @@
 import { Button } from "@material-tailwind/react";
+import { motion } from "framer-motion";
 
 export default function Card(props) {
   console.log("Card");
 
   return (
-    <div className='h-80 w-72 m-6 select-none bg-slate-100 backdrop-blur-md backdrop-brightness-50 flex justify-center items-center flex-col rounded-2xl'>
+    <motion.div
+      initial={{ opacity: 0, translateX: 50 }}
+      animate={{ opacity: 1, translateX: 0 }}
+      transition={{ duration: 2, type: "spring", delay: 1 }}
+      className='h-80 w-72 m-6 select-none bg-slate-100 backdrop-blur-md backdrop-brightness-50 flex justify-center items-center flex-col rounded-2xl'
+    >
       <div className='h-36 w-max flex flex-col justify-center items-center gap-5'>
         <div className='text-white font-extrabold text-4xl'>
           {props.subName}
@@ -22,6 +28,6 @@ export default function Card(props) {
           View
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 }
