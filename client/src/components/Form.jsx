@@ -7,19 +7,25 @@ import FetchedlinksContext from "../store/fetchedlinks-context";
 import Button from "./UI/Button";
 
 const Form = (props) => {
+  // contexts created : 1. state of fetching of results
+  //                    2. state of loading of the results
   const fetchctx = useContext(FetchedlinksContext);
   const ctx = useContext(LoadingContext);
+
+  // states : subjects fetched for the drop down menu and the second state is the state of the entered Value by the user
   const [fetchedSubjects, setFetchedSubjects] = useState([]);
-  //const [fetchedLinks, setFetchedLinks] = useState(null);
   const [enteredValue, setEnteredValue] = useState({
     subject: "",
     type: "",
     year: "",
   });
-  console.log(enteredValue);
+
+  // refs are used to reset the field of the dropdown menu flawlessly
   const resetSubjectField = useRef();
   const resetTypeField = useRef();
   const resetYearField = useRef();
+
+  // function to fetch the list of available subjects from the server and this function will further be used in a useEffect block as we want to call this function at the first mounting
   const fetchSubjectData = () => {
     fetch("http://localhost:8080/data/subjects")
       .then((response) => response.json())
@@ -27,16 +33,20 @@ const Form = (props) => {
         setFetchedSubjects(subjects);
       })
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
   };
+
+  //the useEffect block
   useEffect(() => {
     fetchSubjectData();
   }, []);
+
+  // dropdown menu options passed as array of options inside the DropDownMenu component
   const typesOptions = ["Notes", "Previous-Year Papers"];
   const yearsOptions = ["2018", "2019", "2020", "2021"];
 
-  // Handlers
+  //enteredValue change Handlers
   const subjectChangeHandler = (entered) => {
     setEnteredValue((prevState) => {
       return {
@@ -61,6 +71,7 @@ const Form = (props) => {
       };
     });
   };
+
   //the reset handler
   const resetHandler = (event) => {
     resetSubjectField.current.clearInput();
@@ -72,11 +83,21 @@ const Form = (props) => {
       year: "",
     });
   };
-  console.log(ctx);
-  console.log(ctx.isLoading);
+
   //the submit handler
   const submitHandler = async () => {
     try {
+      // checking that whether all the options required are choosen our not
+      if (
+        !(
+          enteredValue.subject &&
+          enteredValue.type &&
+          (enteredValue.type !== "Notes" ? enteredValue.year : true)
+        )
+      ) {
+        throw new Error("Enter all details first");
+      }
+      // context state management
       ctx.onLoading();
       ctx.loaderOn();
       const response = await fetch(
@@ -91,13 +112,12 @@ const Form = (props) => {
         throw new Error("Response Not Present");
       }
       const links = await response.json();
-      console.log(links);
       fetchctx.onFetched(links);
       ctx.onLoaded();
       ctx.loaderOff();
       // props.subjectDataEntry(links);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   };
 
@@ -116,12 +136,14 @@ const Form = (props) => {
           options={typesOptions}
           handleChange={typeChangeHandler}
         />
-        <DropdownMenu
-          ref={resetYearField}
-          label='Select Year'
-          options={yearsOptions}
-          handleChange={yearChangeHandler}
-        />
+        {enteredValue.type !== "Notes" ? (
+          <DropdownMenu
+            ref={resetYearField}
+            label='Select Year'
+            options={yearsOptions}
+            handleChange={yearChangeHandler}
+          />
+        ) : null}
       </div>
       <div className='flex w-80 justify-around'>
         <Button
