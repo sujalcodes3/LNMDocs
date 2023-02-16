@@ -5,7 +5,9 @@ export default function Button(props) {
     <button
       onClick={props.onClick}
       className={`text-white px-9 drop-shadow-md font-semibold py-2 rounded-lg  ${
-        props.type === "submit" ? "bg-purpleButton " : "bg-transparent border-2"
+        props.type === "submit" || props.type === "download"
+          ? "bg-purpleButton hover:bg-purpleButtonLight"
+          : "bg-transparent border-2 hover:border-purpleButton"
       }`}
     >
       {props.children}

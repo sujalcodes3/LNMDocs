@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { useRef } from "react";
 import { useState, useEffect } from "react";
-import LoadingContext from "../store/loading-context";
+import LoadingContext from "../../store/loading-context";
 import DropdownMenu from "./DropDownMenu";
-import FetchedlinksContext from "../store/fetchedlinks-context";
-import Button from "./UI/Button";
+import FetchedlinksContext from "../../store/fetchedlinks-context";
+import Button from "../UIHelpers/Button";
+import { motion } from "framer-motion";
 
 const Form = (props) => {
   // contexts created : 1. state of fetching of results
@@ -122,7 +123,12 @@ const Form = (props) => {
   };
 
   return (
-    <div className='flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent'>
+    <motion.div
+      initial={{ opacity: 0, translateX: 100 }}
+      animate={{ opacity: 1, translateX: 0 }}
+      transition={{ duration: 1, type: "spring", stiffness: 100 }}
+      className='flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent border-4 border-purpleAccent2'
+    >
       <div className='h-max w-max flex flex-col justify-evenly items-center gap-10'>
         <DropdownMenu
           ref={resetSubjectField}
@@ -163,7 +169,7 @@ const Form = (props) => {
           Reset
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

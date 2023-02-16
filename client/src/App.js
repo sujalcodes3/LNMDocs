@@ -1,12 +1,12 @@
 import React from "react";
-import Form from "./components/Form";
-import Navbar from "./components/Navbar.jsx";
+import Form from "./components/Form/Form";
+import Navbar from "./components/UIHelpers/Navbar.jsx";
 import image from "./assets/left_png.png";
 import useMediaQuery from "./hooks/useMediaQuery";
 import FetchedlinksContext from "./store/fetchedlinks-context";
 import { useContext } from "react";
 import LoadingContext from "./store/loading-context";
-import Resultlist from "./components/Resultlist";
+import Resultlist from "./components/Results/Resultlist";
 import { motion } from "framer-motion";
 import { MutatingDots } from "react-loader-spinner";
 
@@ -20,7 +20,7 @@ function App() {
         <motion.div
           initial={{ opacity: 0, translateX: -50 }}
           animate={{ opacity: 1, translateX: 0 }}
-          transition={{ duration: 2 }}
+          transition={{ duration: 1, type: "spring", stiffness: 100 }}
         >
           <Resultlist
             data={fetchctx.fetchedLinks.notes}
@@ -59,12 +59,23 @@ function App() {
         }`}
       >
         {!fetchctx.isFetched && (
-          <img src={image} alt='test' className='md:hidden' />
+          <motion.div
+            initial={{ opacity: 0, translateX: -100 }}
+            animate={{ opacity: 1, translateX: 0 }}
+            transition={{ duration: 1, type: "spring", stiffness: 100 }}
+          >
+            <img src={image} alt='test' className='md:hidden' />9
+          </motion.div>
         )}
         <div className='flex flex-col justify-center items-center gap-y-6'>
-          <div className='text-blue-gray-100 font-bold text-4xl my-5 text-center w-96 drop-shadow-4xl z-1000 select-none'>
+          <motion.div
+            initial={{ opacity: 0, translateX: -100 }}
+            animate={{ opacity: 1, translateX: 0 }}
+            transition={{ duration: 1.3, type: "spring", stiffness: 100 }}
+            className='text-blue-gray-100 font-bold text-4xl my-5 text-center w-96 drop-shadow-4xl z-1000 select-none'
+          >
             All exam resources at your fingertips
-          </div>
+          </motion.div>
           <Form />
         </div>
         <div className='flex justify-center items-center'>

@@ -1,6 +1,6 @@
 import express from "express";
 import homeRoutes from "./routes/home.js";
-import dataSetRoutes from "./routes/dataSet.js"
+import dataSetRoutes from "./routes/dataSet.js";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 
@@ -34,6 +34,5 @@ mongoose
     app.listen(8080);
   })
   .catch((err) => {
-
     console.log(err);
   });

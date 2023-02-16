@@ -16,7 +16,9 @@ module.exports = withMT({
       },
       colors: {
         purpleAccent: "rgb(120, 63, 245, 0.25)",
+        purpleAccent2: "rgb(60, 24, 134, 0.25)",
         purpleButton: "#af58f0",
+        purpleButtonLight: "#c17ef3",
       },
     },
   },
