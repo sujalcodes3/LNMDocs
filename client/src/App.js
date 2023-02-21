@@ -17,23 +17,19 @@ function App() {
 
   const notesResults = fetchctx.fetchedLinks
     ? fetchctx.fetchedLinks.hasOwnProperty("notes") && (
-        <motion.div
-          initial={{ opacity: 0, translateX: -50 }}
-          animate={{ opacity: 1, translateX: 0 }}
-          transition={{ duration: 1, type: "spring", stiffness: 100 }}
-        >
+        <div>
           <Resultlist
             data={fetchctx.fetchedLinks.notes}
             type='notes'
             subName={fetchctx.fetchedLinks.name}
           />
-        </motion.div>
+        </div>
       )
     : null;
   const paperResults = fetchctx.fetchedLinks
     ? !fetchctx.fetchedLinks.hasOwnProperty("notes") &&
       fetchctx.fetchedLinks.hasOwnProperty("etpaperData") && (
-        <div>
+        <div className='w-[46rem] flex flex-wrap'>
           <Resultlist
             data={fetchctx.fetchedLinks.etpaperData}
             title='End Term Paper'
@@ -78,7 +74,7 @@ function App() {
           </motion.div>
           <Form />
         </div>
-        <div className='flex justify-center items-center'>
+        <div className='flex justify-center items-center '>
           {ctx.loader && (
             <MutatingDots
               height='100'

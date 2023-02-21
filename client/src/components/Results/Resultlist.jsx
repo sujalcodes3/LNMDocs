@@ -1,3 +1,4 @@
+import React from "react";
 import ResultCard from "./ResultCard";
 
 export default function Resultlist(props) {
@@ -23,6 +24,5 @@ export default function Resultlist(props) {
       />
     ));
   }
-
-  return <div className='flex w-max'>{content}</div>;
+  return <React.Fragment>{content}</React.Fragment>;
 }

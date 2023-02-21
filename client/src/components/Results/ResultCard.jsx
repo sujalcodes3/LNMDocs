@@ -9,7 +9,7 @@ export default function ResultCard(props) {
       initial={{ opacity: 0, translateX: 50 }}
       animate={{ opacity: 1, translateX: 0 }}
       transition={{ duration: 1, type: "spring", delay: 1 }}
-      className='h-64 w-80 m-6 select-none bg-purpleAccent2 flex justify-center items-center gap-y-9 border-4 border-purpleAccent flex-col rounded-2xl'
+      className='h-[17rem] w-[20rem] m-6  select-none bg-purpleAccent2 flex justify-center items-center gap-y-9 border-4 border-purpleAccent flex-col rounded-2xl'
     >
       <div className='h-36 w-max flex flex-col justify-center items-center gap-6'>
         <div className='text-white font-extrabold text-4xl'>
