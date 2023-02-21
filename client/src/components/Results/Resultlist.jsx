@@ -3,6 +3,7 @@ import ResultCard from "./ResultCard";
 
 export default function Resultlist(props) {
   console.log("ResultList");
+  console.log(props.data);
   let content;
   if (props.type === "notes") {
     console.log("Notes type Checking");
@@ -14,13 +15,13 @@ export default function Resultlist(props) {
       />
     ));
   } else {
-    console.log("Papers type Checking");
     content = props.data.map((ele) => (
       <ResultCard
         subName={props.subName}
         key={Math.random()}
         title={props.title}
         year={ele.year}
+        shareLink={ele.link}
       />
     ));
   }
