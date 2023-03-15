@@ -28,7 +28,7 @@ const Form = (props) => {
 
   // function to fetch the list of available subjects from the server and this function will further be used in a useEffect block as we want to call this function at the first mounting
   const fetchSubjectData = () => {
-    fetch("http://localhost:8080/data/subjects")
+    fetch("https://lnmdocsserver.onrender.com/data/subjects")
       .then((response) => response.json())
       .then((subjects) => {
         setFetchedSubjects(subjects);
@@ -102,7 +102,7 @@ const Form = (props) => {
       ctx.onLoading();
       ctx.loaderOn();
       const response = await fetch(
-        "http://localhost:8080/data/get-link/" +
+        "https://lnmdocsserver.onrender.com/data/get-link/" +
           enteredValue.subject +
           "/" +
           (enteredValue.type === "Previous-Year Papers" ? "papers" : "Notes") +
@@ -127,43 +127,43 @@ const Form = (props) => {
       initial={{ opacity: 0, translateX: 100 }}
       animate={{ opacity: 1, translateX: 0 }}
       transition={{ duration: 1, type: "spring", stiffness: 100 }}
-      className='flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent border-4 border-purpleAccent2'
+      className="flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent border-4 border-purpleAccent2"
     >
-      <div className='h-max w-max flex flex-col justify-evenly items-center gap-10'>
+      <div className="h-max w-max flex flex-col justify-evenly items-center gap-10">
         <DropdownMenu
           ref={resetSubjectField}
-          label='Select Subject'
+          label="Select Subject"
           options={fetchedSubjects}
           handleChange={subjectChangeHandler}
         />
         <DropdownMenu
           ref={resetTypeField}
-          label='Select Type'
+          label="Select Type"
           options={typesOptions}
           handleChange={typeChangeHandler}
         />
         {enteredValue.type !== "Notes" ? (
           <DropdownMenu
             ref={resetYearField}
-            label='Select Year'
+            label="Select Year"
             options={yearsOptions}
             handleChange={yearChangeHandler}
           />
         ) : null}
       </div>
-      <div className='flex w-80 justify-around'>
+      <div className="flex w-80 justify-around">
         <Button
-          type='submit'
-          className='w-40 m-auto '
-          variant='gradient'
+          type="submit"
+          className="w-40 m-auto "
+          variant="gradient"
           onClick={submitHandler}
         >
           Search
         </Button>
         <Button
-          type='reset'
-          className='w-24 m-auto'
-          variant='outlined'
+          type="reset"
+          className="w-24 m-auto"
+          variant="outlined"
           onClick={resetHandler}
         >
           Reset

@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js"
+
   },
   "author": "Harsh Ojha and Sujal Jain",
   "license": "ISC",
