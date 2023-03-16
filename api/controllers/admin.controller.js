@@ -37,11 +37,11 @@ export const addData = (req, res, next) => {
     })
     .then((res) => {
       console.log("Updated Successfully");
+      res.status(200).json({
+        message: "Added Successfully",
+      });
     })
     .catch((err) => {
       console.log(err);
     });
-  res.status(200).json({
-    message: "Added Successfully",
-  });
 };
