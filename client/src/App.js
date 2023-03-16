@@ -19,7 +19,7 @@ function App() {
     ? fetchctx.fetchedLinks.hasOwnProperty("notes") && (
         <div>
           <Resultlist
-            data={fetchctx.fetchedLinks.notes}
+            data={fetchctx.fetchedLinks.notesData}
             type="notes"
             subName={fetchctx.fetchedLinks.name}
           />
@@ -29,7 +29,7 @@ function App() {
   const paperResults = fetchctx.fetchedLinks
     ? !fetchctx.fetchedLinks.hasOwnProperty("notes") &&
       fetchctx.fetchedLinks.hasOwnProperty("etpaperData") && (
-        <div className="w-[46rem] flex flex-wrap">
+        <div className="w-[46rem] flex flex-wrap items-center justify-evenly pt-4">
           <Resultlist
             data={fetchctx.fetchedLinks.etpaperData}
             title="End Term Paper"
@@ -45,12 +45,12 @@ function App() {
         </div>
       )
     : null;
-
+  console.log(notesResults);
   return (
     <div className="h-[calc(100vh-40px)]">
       <Navbar />
       <div
-        className={` justify-evenly h-[calc(100vh-200px)] items-center ${
+        className={`justify-evenly h-[calc(100vh-200px)] items-center ${
           isDesktop ? "flex" : ""
         }`}
       >
