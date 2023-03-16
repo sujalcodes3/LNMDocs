@@ -7,8 +7,8 @@ export const addData = (req, res, next) => {
   Subject.findOne({
     name: subject,
   })
-    .then((res) => {
-      if (!res) {
+    .then((resData) => {
+      if (!resData) {
         const newSubject = new Subject({
           name: subject,
           semester: 1,
@@ -35,7 +35,7 @@ export const addData = (req, res, next) => {
         );
       }
     })
-    .then((res) => {
+    .then((resData) => {
       console.log("Updated Successfully");
       res.status(200).json({
         message: "Added Successfully",
