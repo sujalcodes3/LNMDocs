@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const SubjectSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    // required: true,
   },
   semester: {
     type: String,

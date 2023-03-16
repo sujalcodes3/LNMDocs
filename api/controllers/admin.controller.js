@@ -19,7 +19,6 @@ export const addData = (req, res, next) => {
           etpapers:
             type === "etpapers" ? [{ year: req.body.year, link: link }] : [],
         });
-
         return newSubject.save();
       } else {
         return Subject.updateOne(
