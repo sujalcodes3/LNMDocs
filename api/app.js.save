@@ -20,7 +20,6 @@ app.use((req, res, next) => {
 
 app.use("/home", homeRoutes);
 app.use("/data", dataSetRoutes);
-app.use("/admin", adminRoutes);
 
 mongoose
   .connect(
