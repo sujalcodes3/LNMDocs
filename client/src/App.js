@@ -29,7 +29,7 @@ function App() {
   const paperResults = fetchctx.fetchedLinks
     ? !fetchctx.fetchedLinks.hasOwnProperty("notes") &&
       fetchctx.fetchedLinks.hasOwnProperty("etpaperData") && (
-        <div className="w-[46rem] flex flex-wrap items-center justify-evenly pt-4">
+        <div className="w-[46rem] flex flex-wrap items-center justify-center">
           <Resultlist
             data={fetchctx.fetchedLinks.etpaperData}
             title="End Term Paper"

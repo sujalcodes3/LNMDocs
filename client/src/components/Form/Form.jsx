@@ -6,12 +6,14 @@ import DropdownMenu from "./DropDownMenu";
 import FetchedlinksContext from "../../store/fetchedlinks-context";
 import Button from "../UIHelpers/Button";
 import { motion } from "framer-motion";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 const Form = (props) => {
   // contexts created : 1. state of fetching of results
   //                    2. state of loading of the results
   const fetchctx = useContext(FetchedlinksContext);
   const ctx = useContext(LoadingContext);
+  const isDesktop = useMediaQuery("(min-width:800px)");
 
   // states : subjects fetched for the drop down menu and the second state is the state of the entered Value by the user
   const [fetchedSubjects, setFetchedSubjects] = useState([]);
@@ -127,7 +129,9 @@ const Form = (props) => {
       initial={{ opacity: 0, translateX: 100 }}
       animate={{ opacity: 1, translateX: 0 }}
       transition={{ duration: 1, type: "spring", stiffness: 100 }}
-      className="flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent border-4 border-purpleAccent2"
+      className={`${
+        !isDesktop ? "px-4 py-10" : " p-10 "
+      } flex h-max flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent border-4 border-purpleAccent2`}
     >
       <div className="h-max w-max flex flex-col justify-evenly items-center gap-10">
         <DropdownMenu
