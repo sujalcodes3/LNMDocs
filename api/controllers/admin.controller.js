@@ -4,6 +4,43 @@ export const addData = (req, res, next) => {
   const { subject, type, link } = req.body;
   console.log(req.body);
 
+  Subject.findOne({
+    name: subject,
+  })
+    .then((res) => {
+      if (!res) {
+        const subject = new Subject({
+          name: subject,
+          semester: 1,
+          notes:
+            type === "notes" ? [{ name: req.body.noteName, link: link }] : [],
+          mtpapers:
+            type === "mtpapers" ? [{ year: req.body.year, link: link }] : [],
+          etpapers:
+            type === "etpapers" ? [{ year: req.body.year, link: link }] : [],
+        });
+
+        return subject.save();
+      } else {
+        return Subject.updateOne(
+          { name: subject },
+          {
+            $push:
+              type === "notes"
+                ? { notes: { name: req.body.noteName, link: link } }
+                : type === "mtpapers"
+                ? { mtpapers: { year: req.body.year, link: link } }
+                : { etpapers: { year: req.body.year, link: link } },
+          }
+        );
+      }
+    })
+    .then((res) => {
+      console.log("Updated Successfully");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   res.status(200).json({
     message: "Added Successfully",
   });
