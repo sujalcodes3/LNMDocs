@@ -4,7 +4,7 @@ import dataSetRoutes from "./routes/dataSet.js";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import * as dotenv from "dotenv/config";
-
+import adminRoutes from "./routes/admin.js";
 const app = express();
 app.use(bodyParser.json());
 
