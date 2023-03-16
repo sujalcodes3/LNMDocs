@@ -1,21 +1,32 @@
-import { Button } from "@material-tailwind/react";
+import { useContext } from "react";
 import { useRef } from "react";
 import { useState, useEffect } from "react";
+import LoadingContext from "../../store/loading-context";
 import DropdownMenu from "./DropDownMenu";
-import Resultlist from "./Resultlist";
+import FetchedlinksContext from "../../store/fetchedlinks-context";
+import Button from "../UIHelpers/Button";
+import { motion } from "framer-motion";
+
 const Form = (props) => {
+  // contexts created : 1. state of fetching of results
+  //                    2. state of loading of the results
+  const fetchctx = useContext(FetchedlinksContext);
+  const ctx = useContext(LoadingContext);
+
+  // states : subjects fetched for the drop down menu and the second state is the state of the entered Value by the user
   const [fetchedSubjects, setFetchedSubjects] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [fetchedLinks, setFetchedLinks] = useState(null);
   const [enteredValue, setEnteredValue] = useState({
     subject: "",
     type: "",
     year: "",
   });
-  console.log(enteredValue);
+
+  // refs are used to reset the field of the dropdown menu flawlessly
   const resetSubjectField = useRef();
   const resetTypeField = useRef();
   const resetYearField = useRef();
+
+  // function to fetch the list of available subjects from the server and this function will further be used in a useEffect block as we want to call this function at the first mounting
   const fetchSubjectData = () => {
     fetch("http://localhost:8080/data/subjects")
       .then((response) => response.json())
@@ -23,16 +34,20 @@ const Form = (props) => {
         setFetchedSubjects(subjects);
       })
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
   };
+
+  //the useEffect block
   useEffect(() => {
     fetchSubjectData();
   }, []);
+
+  // dropdown menu options passed as array of options inside the DropDownMenu component
   const typesOptions = ["Notes", "Previous-Year Papers"];
   const yearsOptions = ["2018", "2019", "2020", "2021"];
 
-  // Handlers
+  //enteredValue change Handlers
   const subjectChangeHandler = (entered) => {
     setEnteredValue((prevState) => {
       return {
@@ -57,6 +72,7 @@ const Form = (props) => {
       };
     });
   };
+
   //the reset handler
   const resetHandler = (event) => {
     resetSubjectField.current.clearInput();
@@ -72,7 +88,19 @@ const Form = (props) => {
   //the submit handler
   const submitHandler = async () => {
     try {
-      setIsLoading(true);
+      // checking that whether all the options required are choosen our not
+      if (
+        !(
+          enteredValue.subject &&
+          enteredValue.type &&
+          (enteredValue.type !== "Notes" ? enteredValue.year : true)
+        )
+      ) {
+        throw new Error("Enter all details first");
+      }
+      // context state management
+      ctx.onLoading();
+      ctx.loaderOn();
       const response = await fetch(
         "http://localhost:8080/data/get-link/" +
           enteredValue.subject +
@@ -85,85 +113,63 @@ const Form = (props) => {
         throw new Error("Response Not Present");
       }
       const links = await response.json();
-      console.log(links);
-      setFetchedLinks(links);
-      setIsLoading(false);
+      fetchctx.onFetched(links);
+      ctx.onLoaded();
+      ctx.loaderOff();
+      // props.subjectDataEntry(links);
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   };
-  const notesResult = fetchedLinks
-    ? fetchedLinks.hasOwnProperty("notes") && (
-        <Resultlist
-          data={fetchedLinks.notes}
-          type="notes"
-          subName={fetchedLinks.name}
-        />
-      )
-    : null;
-  const paperResult = fetchedLinks
-    ? !fetchedLinks.hasOwnProperty("notes") &&
-      fetchedLinks.hasOwnProperty("etpaperData") && (
-        <>
-          <Resultlist
-            data={fetchedLinks.etpaperData}
-            title="End Term Paper"
-            type="etpapers"
-            subName={fetchedLinks.name}
-          />
-          <Resultlist
-            data={fetchedLinks.mtpaperData}
-            title="Mid Term Paper"
-            type="mtpapers"
-            subName={fetchedLinks.name}
-          />
-        </>
-      )
-    : null;
-  console.log(notesResult);
-  console.log(paperResult);
+
   return (
-    <div className="flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg   bg-slate-100 backdrop-blur-sm backdrop-brightness-150">
-      <div className="h-max w-max flex flex-col justify-evenly items-center gap-10">
+    <motion.div
+      initial={{ opacity: 0, translateX: 100 }}
+      animate={{ opacity: 1, translateX: 0 }}
+      transition={{ duration: 1, type: "spring", stiffness: 100 }}
+      className='flex h-max w-92 p-10 flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent border-4 border-purpleAccent2'
+    >
+      <div className='h-max w-max flex flex-col justify-evenly items-center gap-10'>
         <DropdownMenu
           ref={resetSubjectField}
-          label="Select Subject"
+          label='Select Subject'
           options={fetchedSubjects}
           handleChange={subjectChangeHandler}
         />
         <DropdownMenu
           ref={resetTypeField}
-          label="Select Type"
+          label='Select Type'
           options={typesOptions}
           handleChange={typeChangeHandler}
         />
-        <DropdownMenu
-          ref={resetYearField}
-          label="Select Year"
-          options={yearsOptions}
-          handleChange={yearChangeHandler}
-        />
+        {enteredValue.type !== "Notes" ? (
+          <DropdownMenu
+            ref={resetYearField}
+            label='Select Year'
+            options={yearsOptions}
+            handleChange={yearChangeHandler}
+          />
+        ) : null}
       </div>
-      <div className="flex gap-8">
+      <div className='flex w-80 justify-around'>
         <Button
-          className="w-40 m-auto "
-          variant="gradient"
+          type='submit'
+          className='w-40 m-auto '
+          variant='gradient'
           onClick={submitHandler}
         >
           Search
         </Button>
         <Button
-          className="w-24 m-auto"
-          variant="outlined"
+          type='reset'
+          className='w-24 m-auto'
+          variant='outlined'
           onClick={resetHandler}
         >
           Reset
         </Button>
       </div>
-
-      {!isLoading && fetchedLinks && notesResult}
-      {!isLoading && fetchedLinks && paperResult}
-    </div>
+    </motion.div>
   );
 };
 

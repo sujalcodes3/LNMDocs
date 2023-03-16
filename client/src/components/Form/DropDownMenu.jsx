@@ -33,28 +33,28 @@ const DropDownMenu = React.forwardRef((props, ref) => {
     document.addEventListener("mousedown", handleClickOutside);
   }, [clickOutside]);
 
-  const iconProps={
-    size:18,
-    className:"text-gray"
-  }
-  
+  const iconProps = {
+    size: 18,
+    className: "text-gray",
+  };
+
   const iconName = props.label.toLowerCase();
   const icon = iconName.includes("subject") ? (
-    <ImBooks {...iconProps}/>
+    <ImBooks {...iconProps} />
   ) : iconName.includes("type") ? (
-    <CgOptions {...iconProps}/>
+    <CgOptions {...iconProps} />
   ) : (
-    <BsCalendarEventFill {...iconProps}/>
+    <BsCalendarEventFill {...iconProps} />
   );
 
   return (
-    <div ref={clickOutside} className="w-72 font-medium h-max">
+    <div ref={clickOutside} className='w-72 font-medium h-max '>
       <div
-        className={`border-2 select-none cursor-pointer border-gray-400 w-full text-white flex justify-around items-center rounded-lg ${
-          !selected && "text-gray-100 "
+        className={`border-2 select-none cursor-pointer hover:border-purpleButton border-white w-full text-white flex justify-around items-center rounded-lg ${
+          !selected && "text-white"
         }`}
       >
-        <div className="flex justify-between items-center sticky top-0 bg-transparent">
+        <div className='flex justify-between items-center sticky top-0 bg-transparent'>
           {icon}
           <input
             ref={inputClear}
@@ -66,9 +66,9 @@ const DropDownMenu = React.forwardRef((props, ref) => {
               props.handleChange(inputValue);
             }}
             value={inputValue}
-            type="text"
+            type='text'
             placeholder={selected ? selected : props.label}
-            className="placeholder:text-gray-400 py-2 pl-3 w-48 outline-none bg-transparent "
+            className='placeholder:text-gray-400 py-2 pl-3 w-48 outline-none bg-transparent '
           />
         </div>
         <BiChevronDown
