@@ -9,7 +9,7 @@ export const addData = (req, res, next) => {
   })
     .then((res) => {
       if (!res) {
-        const subject = new Subject({
+        const newSubject = new Subject({
           name: subject,
           semester: 1,
           notes:
@@ -20,7 +20,7 @@ export const addData = (req, res, next) => {
             type === "etpapers" ? [{ year: req.body.year, link: link }] : [],
         });
 
-        return subject.save();
+        return newSubject.save();
       } else {
         return Subject.updateOne(
           { name: subject },
