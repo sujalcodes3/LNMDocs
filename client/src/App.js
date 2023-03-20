@@ -16,8 +16,8 @@ function App() {
   const isDesktop = useMediaQuery("(min-width:800px)");
 
   const notesResults = fetchctx.fetchedLinks
-    ? fetchctx.fetchedLinks.hasOwnProperty("notes") && (
-        <div>
+    ? fetchctx.fetchedLinks.hasOwnProperty("notesData") && (
+        <div className="w-[46rem] scrollbar-thin scrollbar-thumb-scrollbar scrollbar-track-transparent overflow-y-auto max-h-[22rem] overflow-x-hidden gap-7 flex flex-wrap items-center justify-center">
           <Resultlist
             data={fetchctx.fetchedLinks.notesData}
             type="notes"
@@ -27,7 +27,7 @@ function App() {
       )
     : null;
   const paperResults = fetchctx.fetchedLinks
-    ? !fetchctx.fetchedLinks.hasOwnProperty("notes") &&
+    ? !fetchctx.fetchedLinks.hasOwnProperty("notesData") &&
       fetchctx.fetchedLinks.hasOwnProperty("etpaperData") && (
         <div className="w-[46rem] scrollbar-thin scrollbar-thumb-scrollbar scrollbar-track-transparent overflow-y-auto max-h-[22rem] overflow-x-hidden gap-7 flex flex-wrap items-center justify-center">
           <Resultlist

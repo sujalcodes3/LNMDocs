@@ -12,6 +12,7 @@ export default function Resultlist(props) {
         subName={props.subName}
         title={ele.name}
         key={Math.random()}
+        shareLink={ele.link}
       />
     ));
   } else {

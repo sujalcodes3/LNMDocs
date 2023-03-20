@@ -106,14 +106,16 @@ const Form = (props) => {
       // context state management
       ctx.onLoading();
       ctx.loaderOn();
-      const response = await fetch(
+      const LINK =
         "https://lnmdocsserver.onrender.com/data/get-link/" +
-          enteredValue.subject +
-          "/" +
-          (enteredValue.type === "Previous-Year Papers" ? "papers" : "Notes") +
-          "/" +
-          (enteredValue.type === "Notes" ? null : enteredValue.year)
-      );
+        enteredValue.subject +
+        "/" +
+        (enteredValue.type === "Previous-Year Papers" ? "papers" : "Notes") +
+        "/" +
+        (enteredValue.type === "Notes" ? null : enteredValue.year);
+      console.log(LINK);
+      const response = await fetch(LINK);
+
       if (!response) {
         throw new Error("Response Not Present");
       }
