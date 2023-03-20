@@ -6,9 +6,12 @@ const SubjectSchema = new Schema({
   name: {
     type: String,
     // required: true,
+    /**
+     * This required might work after clearing the entire database as it seems like that one entry which was made during early phase of development has no name in it.
+     */
   },
   semester: {
-    type: String,
+    type: Number,
     required: true,
   },
   notes: [

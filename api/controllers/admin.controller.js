@@ -1,7 +1,7 @@
 import Subject from "../models/Subject.model.js";
 
 export const addData = (req, res, next) => {
-  const { subject, type, link } = req.body;
+  const { subject, type, link, semester } = req.body;
   console.log(req.body);
 
   Subject.findOne({
@@ -11,7 +11,7 @@ export const addData = (req, res, next) => {
       if (!resData) {
         const newSubject = new Subject({
           name: subject,
-          semester: 1,
+          semester: semester,
           notes:
             type === "notes" ? [{ name: req.body.noteName, link: link }] : [],
           mtpapers:
