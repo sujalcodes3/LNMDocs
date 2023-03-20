@@ -63,6 +63,7 @@ const Form = (props) => {
       return {
         ...prevState,
         type: typeName,
+        year: typeName === "Notes" ? null : "",
       };
     });
   };
@@ -79,11 +80,13 @@ const Form = (props) => {
   const resetHandler = (event) => {
     resetSubjectField.current.clearInput();
     resetTypeField.current.clearInput();
-    resetYearField.current.clearInput();
+    if (enteredValue.type === "Previous-Year Papers") {
+      resetYearField.current.clearInput();
+    }
     setEnteredValue({
       subject: "",
       type: "",
-      year: "",
+      year: enteredValue.type === "Notes" ? null : "",
     });
   };
 
@@ -109,7 +112,7 @@ const Form = (props) => {
           "/" +
           (enteredValue.type === "Previous-Year Papers" ? "papers" : "Notes") +
           "/" +
-          enteredValue.year
+          (enteredValue.type === "Notes" ? null : enteredValue.year)
       );
       if (!response) {
         throw new Error("Response Not Present");
