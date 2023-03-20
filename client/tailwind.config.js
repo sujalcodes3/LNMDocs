@@ -17,10 +17,11 @@ module.exports = withMT({
       colors: {
         purpleAccent: "rgb(120, 63, 245, 0.25)",
         purpleAccent2: "rgb(60, 24, 134, 0.25)",
+        scrollbar: "rgb(193, 126, 243)",
         purpleButton: "#af58f0",
         purpleButtonLight: "#c17ef3",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 });
