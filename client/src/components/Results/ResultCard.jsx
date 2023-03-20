@@ -2,12 +2,8 @@ import Button from "../UIHelpers/Button";
 import { motion } from "framer-motion";
 
 export default function ResultCard(props) {
-  console.log("Card");
-  // const id = "321";
-  console.log(props.shareLink);
-  const id = props.shareLink.includes("/")
-    ? props.shareLink.split("/")[5]
-    : "321";
+  const id = props.shareLink.split("/")[5];
+
   const downloadLink = `https://drive.google.com/u/0/uc?id=${id}&export=download`;
 
   console.log(downloadLink);
