@@ -15,7 +15,7 @@ export default function ResultCard(props) {
       className="h-[17rem] w-[20rem] select-none mt-4 bg-purpleAccent2 flex justify-center items-center gap-y-9 border-4 border-purpleAccent flex-col rounded-2xl"
     >
       <div className="h-36 w-max flex flex-col justify-center items-center gap-6">
-        <div className="text-white font-extrabold text-4xl">
+        <div className="text-white text-center font-extrabold text-[100%] w-[16rem]">
           {props.subName}
         </div>
         <div className="text-white font-normal text-xl">{props.title}</div>
