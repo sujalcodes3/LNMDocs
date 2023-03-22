@@ -39,7 +39,9 @@ const Form = (props) => {
       // const response = await fetch(
       //   "https://lnmdocsserver.onrender.com/data/subjects"
       // );
-      const response = await fetch("http://localhost:8081/data/subjects");
+      const response = await fetch(
+        "https://lnmdocsserver.onrender.com/data/subjects"
+      );
       if (!response) {
         throw new Error("No Response recieved");
       }
