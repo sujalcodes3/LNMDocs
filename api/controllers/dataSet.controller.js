@@ -41,9 +41,20 @@ export const getData = (req, res, next) => {
 };
 
 export const getSubjects = (req, res, next) => {
+  //sends the subject names and the years of available papers.
   Subject.find()
     .then((resData) => {
-      res.json(resData.map((data) => data.name));
+      const subjectData = resData.map((data) => {
+        const mtpapersyears = data.mtpapers.map((pap) => pap.year);
+        const etpapersyears = data.etpapers.map((pap) => pap.year);
+        const years = [...new Set(mtpapersyears.concat(etpapersyears).sort())];
+
+        return {
+          name: data.name,
+          years: years,
+        };
+      });
+      res.json(subjectData);
     })
     .catch((err) => {
       console.log(err);

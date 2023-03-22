@@ -17,10 +17,10 @@ function App() {
 
   const notesResults = fetchctx.fetchedLinks
     ? fetchctx.fetchedLinks.hasOwnProperty("notesData") && (
-        <div className="w-[46rem] scrollbar-thin scrollbar-thumb-scrollbar scrollbar-track-transparent overflow-y-auto max-h-[22rem] overflow-x-hidden gap-7 flex flex-wrap items-center justify-center">
+        <div className='w-[46rem] scrollbar-thin scrollbar-thumb-scrollbar scrollbar-track-transparent overflow-y-auto max-h-[22rem] overflow-x-hidden gap-7 flex flex-wrap items-center justify-center'>
           <Resultlist
             data={fetchctx.fetchedLinks.notesData}
-            type="notes"
+            type='notes'
             subName={fetchctx.fetchedLinks.name}
           />
         </div>
@@ -29,25 +29,26 @@ function App() {
   const paperResults = fetchctx.fetchedLinks
     ? !fetchctx.fetchedLinks.hasOwnProperty("notesData") &&
       fetchctx.fetchedLinks.hasOwnProperty("etpaperData") && (
-        <div className="w-[46rem] scrollbar-thin scrollbar-thumb-scrollbar scrollbar-track-transparent overflow-y-auto max-h-[22rem] overflow-x-hidden gap-7 flex flex-wrap items-center justify-center">
+        <div className='w-[46rem] scrollbar-thin scrollbar-thumb-scrollbar scrollbar-track-transparent overflow-y-auto max-h-[22rem] overflow-x-hidden gap-7 flex flex-wrap items-center justify-center'>
           <Resultlist
             data={fetchctx.fetchedLinks.etpaperData}
-            title="End Term Paper"
-            type="etpapers"
+            title='End Term Paper'
+            type='etpapers'
             subName={fetchctx.fetchedLinks.name}
           />
           <Resultlist
             data={fetchctx.fetchedLinks.mtpaperData}
-            title="Mid Term Paper"
-            type="mtpapers"
+            title='Mid Term Paper'
+            type='mtpapers'
             subName={fetchctx.fetchedLinks.name}
           />
         </div>
       )
     : null;
+  console.log(ctx.subjectsFetched);
   console.log(notesResults);
   return (
-    <div className="h-[calc(100vh-40px)]">
+    <div className='h-[calc(100vh-40px)]'>
       <Navbar />
       <div
         className={`justify-evenly h-[calc(100vh-200px)] items-center ${
@@ -60,15 +61,15 @@ function App() {
             animate={{ opacity: 1, translateX: 0 }}
             transition={{ duration: 1, type: "spring", stiffness: 100 }}
           >
-            <img src={image} alt="test" className="md:hidden" />9
+            <img src={image} alt='test' className='md:hidden' />9
           </motion.div>
         )}
-        <div className="flex flex-col justify-center items-center gap-y-6">
+        <div className='flex flex-col justify-center items-center gap-y-6'>
           <motion.div
             initial={{ opacity: 0, translateX: -100 }}
             animate={{ opacity: 1, translateX: 0 }}
             transition={{ duration: 1.3, type: "spring", stiffness: 100 }}
-            className="text-blue-gray-100 font-bold text-4xl my-5 text-center w-96 drop-shadow-4xl z-1000 select-none"
+            className='text-blue-gray-100 font-bold text-4xl my-5 text-center w-96 drop-shadow-4xl z-1000 select-none'
           >
             All exam resources at your fingertips
           </motion.div>
@@ -83,14 +84,14 @@ function App() {
         >
           {ctx.loader && (
             <MutatingDots
-              height="100"
-              width="100"
-              color="#fff"
-              secondaryColor="#be6cf4"
-              radius="12.5"
-              ariaLabel="mutating-dots-loading"
+              height='100'
+              width='100'
+              color='#fff'
+              secondaryColor='#be6cf4'
+              radius='12.5'
+              ariaLabel='mutating-dots-loading'
               wrapperStyle={{}}
-              wrapperClass=""
+              wrapperClass=''
               visible={true}
             />
           )}

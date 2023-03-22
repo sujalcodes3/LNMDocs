@@ -7,6 +7,8 @@ import FetchedlinksContext from "../../store/fetchedlinks-context";
 import Button from "../UIHelpers/Button";
 import { motion } from "framer-motion";
 import useMediaQuery from "../../hooks/useMediaQuery";
+import { MutatingDots } from "react-loader-spinner";
+import { yearData } from "../../data";
 
 const Form = (props) => {
   // contexts created : 1. state of fetching of results
@@ -22,6 +24,8 @@ const Form = (props) => {
     type: "",
     year: "",
   });
+  const [yearsOptions, setYearsOptions] = useState(yearData);
+  const [subjectData, setSubjectData] = useState([]);
 
   // refs are used to reset the field of the dropdown menu flawlessly
   const resetSubjectField = useRef();
@@ -29,15 +33,24 @@ const Form = (props) => {
   const resetYearField = useRef();
 
   // function to fetch the list of available subjects from the server and this function will further be used in a useEffect block as we want to call this function at the first mounting
-  const fetchSubjectData = () => {
-    fetch("https://lnmdocsserver.onrender.com/data/subjects")
-      .then((response) => response.json())
-      .then((subjects) => {
-        setFetchedSubjects(subjects);
-      })
-      .catch((err) => {
-        throw err;
-      });
+  const fetchSubjectData = async () => {
+    try {
+      ctx.subjectsNotHere();
+      // const response = await fetch(
+      //   "https://lnmdocsserver.onrender.com/data/subjects"
+      // );
+      const response = await fetch("http://localhost:8081/data/subjects");
+      if (!response) {
+        throw new Error("No Response recieved");
+      }
+      const res = await response.json();
+      const subjects = res.map((data) => data.name);
+      setSubjectData(res);
+      setFetchedSubjects(subjects);
+      ctx.subjectsAreHere();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   //the useEffect block
@@ -47,13 +60,17 @@ const Form = (props) => {
 
   // dropdown menu options passed as array of options inside the DropDownMenu component
   const typesOptions = ["Notes", "Previous-Year Papers"];
-  const yearsOptions = ["2018", "2019", "2020", "2021"];
 
   //enteredValue change Handlers
   const subjectChangeHandler = (entered) => {
+    const partYears = subjectData.filter((data) => data.name === entered)[0]
+      .years;
+    setYearsOptions(partYears);
+    resetYearField.current.clearInput();
     setEnteredValue((prevState) => {
       return {
         ...prevState,
+        year: "",
         subject: entered,
       };
     });
@@ -63,7 +80,7 @@ const Form = (props) => {
       return {
         ...prevState,
         type: typeName,
-        year: typeName === "Notes" ? null : "",
+        year: typeName === "Notes" ? null : prevState.year,
       };
     });
   };
@@ -129,7 +146,7 @@ const Form = (props) => {
     }
   };
 
-  return (
+  const formContent = (
     <motion.div
       initial={{ opacity: 0, translateX: 100 }}
       animate={{ opacity: 1, translateX: 0 }}
@@ -138,47 +155,69 @@ const Form = (props) => {
         !isDesktop ? "px-4 py-10" : " p-10 "
       } flex h-max flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent border-4 border-purpleAccent2`}
     >
-      <div className="h-max w-max flex flex-col justify-evenly items-center gap-10">
+      <div className='h-max w-max flex flex-col justify-evenly items-center gap-10'>
         <DropdownMenu
           ref={resetSubjectField}
-          label="Select Subject"
+          label='Select Subject'
           options={fetchedSubjects}
           handleChange={subjectChangeHandler}
         />
         <DropdownMenu
           ref={resetTypeField}
-          label="Select Type"
+          label='Select Type'
           options={typesOptions}
           handleChange={typeChangeHandler}
         />
         {enteredValue.type !== "Notes" ? (
           <DropdownMenu
             ref={resetYearField}
-            label="Select Year"
+            label='Select Year'
             options={yearsOptions}
             handleChange={yearChangeHandler}
           />
         ) : null}
       </div>
-      <div className="flex w-80 justify-around">
+      <div className='flex w-80 justify-around'>
         <Button
-          type="submit"
-          className="w-40 m-auto "
-          variant="gradient"
+          type='submit'
+          className='w-40 m-auto '
+          variant='gradient'
           onClick={submitHandler}
         >
           Search
         </Button>
         <Button
-          type="reset"
-          className="w-24 m-auto"
-          variant="outlined"
+          type='reset'
+          className='w-24 m-auto'
+          variant='outlined'
           onClick={resetHandler}
         >
           Reset
         </Button>
       </div>
     </motion.div>
+  );
+
+  return ctx.subjectsFetched ? (
+    formContent
+  ) : (
+    <div
+      className={`${
+        !isDesktop ? "px-4 py-10" : " p-30 h-[25.5rem] w-[23.8rem]"
+      } flex  flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent border-4 border-purpleAccent2`}
+    >
+      <MutatingDots
+        height='100'
+        width='100'
+        color='#fff'
+        secondaryColor='#be6cf4'
+        radius='12.5'
+        ariaLabel='mutating-dots-loading'
+        wrapperStyle={{}}
+        wrapperClass=''
+        visible={true}
+      />
+    </div>
   );
 };
 

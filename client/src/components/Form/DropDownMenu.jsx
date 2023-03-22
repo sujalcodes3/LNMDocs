@@ -85,7 +85,7 @@ const DropDownMenu = React.forwardRef((props, ref) => {
       </div>
       <ul
         className={`z-10 absolute px-2 my-2 w-72 bg-white mt-2 rounded-md ${
-          open ? "max-h-60" : "max-h-0"
+          open ? "max-h-[12rem]" : "max-h-0"
         } overflow-y-auto`}
       >
         {props.options?.map((val, index) => {
