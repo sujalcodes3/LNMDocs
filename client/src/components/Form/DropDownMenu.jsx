@@ -23,15 +23,16 @@ const DropDownMenu = React.forwardRef((props, ref) => {
       clearInput: clearInp,
     };
   });
-
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!clickOutside.current.contains(event.target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-  }, [clickOutside]);
+    if (open) {
+      const handleClickOutside = (event) => {
+        if (!clickOutside.current.contains(event.target)) {
+          setOpen(false);
+        }
+      };
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+  }, [clickOutside, open]);
 
   const iconProps = {
     size: 18,
@@ -48,13 +49,13 @@ const DropDownMenu = React.forwardRef((props, ref) => {
   );
 
   return (
-    <div ref={clickOutside} className='w-72 font-medium h-max '>
+    <div ref={clickOutside} className="w-72 font-medium h-max ">
       <div
         className={`border-2 select-none cursor-pointer hover:border-purpleButton border-white w-full text-white flex justify-around items-center rounded-lg ${
           !selected && "text-white"
         }`}
       >
-        <div className='flex justify-between items-center sticky top-0 bg-transparent'>
+        <div className="flex justify-between items-center sticky top-0 bg-transparent">
           {icon}
           <input
             ref={inputClear}
@@ -66,9 +67,9 @@ const DropDownMenu = React.forwardRef((props, ref) => {
               props.handleChange(inputValue);
             }}
             value={inputValue}
-            type='text'
+            type="text"
             placeholder={selected ? selected : props.label}
-            className='placeholder:text-gray-400 py-2 pl-3 w-48 outline-none bg-transparent '
+            className="placeholder:text-gray-400 py-2 pl-3 w-48 outline-none bg-transparent "
           />
         </div>
         <BiChevronDown
