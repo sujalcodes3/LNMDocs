@@ -2,11 +2,8 @@ import React from "react";
 import ResultCard from "./ResultCard";
 
 export default function Resultlist(props) {
-  console.log("ResultList");
-  console.log(props.data);
   let content;
   if (props.type === "notes") {
-    console.log("Notes type Checking");
     content = props.data.map((ele) => (
       <ResultCard
         subName={props.subName}
