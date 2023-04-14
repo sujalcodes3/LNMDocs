@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { MutatingDots } from "react-loader-spinner";
 import { yearData } from "../../data";
+import { toast } from "react-toastify";
 
 const Form = (props) => {
   // contexts created : 1. state of fetching of results
@@ -26,7 +27,7 @@ const Form = (props) => {
   });
   const typesOptions = ["Notes", "Previous-Year Papers"];
   const [yearsOptions, setYearsOptions] = useState(yearData);
-  const [typeOptions, setTypeOptions] = useState(typesOptions);
+  // const [typeOptions, setTypeOptions] = useState(typesOptions);
   const [subjectData, setSubjectData] = useState([]);
 
   // refs are used to reset the field of the dropdown menu flawlessly
@@ -67,12 +68,12 @@ const Form = (props) => {
   const subjectChangeHandler = (entered) => {
     const partYears = subjectData.filter((data) => data.name === entered)[0]
       .years;
-    const hasNotes = subjectData.filter((data) => data.name === entered)[0]
-      .hasNotes;
+    // const hasNotes = subjectData.filter((data) => data.name === entered)[0]
+    //   .hasNotes;
     setYearsOptions(partYears);
-    if (!hasNotes) {
-      setTypeOptions(["Previous-Year Papers"]);
-    }
+    // if (!hasNotes) {
+    //   setTypeOptions(["Previous-Year Papers"]);
+    // }
     if (enteredValue.type !== "Notes") {
       resetYearField.current.clearInput();
     }
@@ -126,7 +127,17 @@ const Form = (props) => {
           (enteredValue.type !== "Notes" ? enteredValue.year : true)
         )
       ) {
-        throw new Error("Enter all details first");
+        toast.warn("Enter all details", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        throw new Error("Enter all details folks....");
       }
       // context state management
       ctx.onLoading();
@@ -162,49 +173,63 @@ const Form = (props) => {
         !isDesktop ? "px-4 py-10" : " p-10 "
       } flex h-max flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent border-4 border-purpleAccent2`}
     >
-      <div className="h-max w-max flex flex-col justify-evenly items-center gap-10">
+      <div className='h-max w-max flex flex-col justify-evenly items-center gap-10'>
         <DropdownMenu
           ref={resetSubjectField}
-          label="Select Subject"
+          label='Select Subject'
           options={fetchedSubjects}
           handleChange={subjectChangeHandler}
           selectedType={enteredValue.type}
         />
         <DropdownMenu
           ref={resetTypeField}
-          label="Select Type"
-          options={typeOptions}
+          label='Select Type'
+          options={typesOptions}
           handleChange={typeChangeHandler}
           selectedType={enteredValue.type}
         />
         {enteredValue.type !== "Notes" ? (
           <DropdownMenu
             ref={resetYearField}
-            label="Select Year"
+            label='Select Year'
             options={yearsOptions}
             handleChange={yearChangeHandler}
             selectedType={enteredValue.type}
           />
         ) : null}
       </div>
-      <div className="flex w-80 justify-around">
+      <div className='flex w-80 justify-around'>
         <Button
-          type="submit"
-          className="w-40 m-auto "
-          variant="gradient"
+          type='submit'
+          className='w-40 m-auto '
+          variant='gradient'
           onClick={submitHandler}
         >
           Search
         </Button>
         <Button
-          type="reset"
-          className="w-24 m-auto"
-          variant="outlined"
+          type='reset'
+          className='w-24 m-auto'
+          variant='outlined'
           onClick={resetHandler}
         >
           Reset
         </Button>
       </div>
+      {/* {!isDesktop && (
+        <ToastContainer
+          position='top-right'
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme='dark'
+        />
+      )} */}
     </motion.div>
   );
 
@@ -217,14 +242,14 @@ const Form = (props) => {
       } flex  flex-col justify-center items-center gap-y-10 rounded-lg bg-purpleAccent border-4 border-purpleAccent2`}
     >
       <MutatingDots
-        height="100"
-        width="100"
-        color="#fff"
-        secondaryColor="#be6cf4"
-        radius="12.5"
-        ariaLabel="mutating-dots-loading"
+        height='100'
+        width='100'
+        color='#fff'
+        secondaryColor='#be6cf4'
+        radius='12.5'
+        ariaLabel='mutating-dots-loading'
         wrapperStyle={{}}
-        wrapperClass=""
+        wrapperClass=''
         visible={true}
       />
     </div>
